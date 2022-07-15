@@ -1,0 +1,14 @@
+springcloud项目里面的bootstrap.yml里面发现了有这样的一个配置： 
+spring:
+  cloud:
+    inetutils:
+      ignored-interfaces:
+         - eth0
+         - eth1
+         - eth2
+         - eth3
+         - lo
+         
+这样做的目的是防止服务器有多个网卡，导致了在注册服务时导致ip 地址不准确的问题，
+
+还可以通过 spring.cloud.inetutils.preferred-networks=** 通过这个可以指定服务在启动时，注册的ip为指定的网卡。 
