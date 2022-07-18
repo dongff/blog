@@ -1,0 +1,130 @@
+1）定义
+  AOP为Aspect Oriented Programming 的缩写，意为“面向切面编程”，通过预编译方式和运行预期动态代理实现程序功能的统一维护的一种技术。AOP是OOP的延续，是软件开发中的一个热点，也是Spring框架中的一个重要内容，是函数式编程的一种衍生泛型。 利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各个部分之间的耦合度降低，提高程序的可用性，同时提高了开发的效率。
+
+在Spring AOP中业务仅仅关注自身的逻辑，将日志，性能统计，安全控制，事物处理，异常处理等代码从业务逻辑代码中划分出来，通过对这些行为的分离，我们希望可以将它们独立到飞指导业务逻辑的方法中去，进而改变这些行为的时候不会影响业务逻辑。因此@Aspect注解应运而生。
+相关注解及介绍
+
+2）相关注解
+  2.1）  @Aspcet 把当前类标识为一个切面，供容器读取。放到类上面
+         @Pointcut 定义切入点，放到方法上，表明是要监控哪个地方。
+ 
+实例
+@Aspect
+@Slf4j
+public class AspectConfig {
+
+    @Pointcut("execution(* cn.com.controller.MybitsController.*())")
+    public void manage() {
+
+    }
+其中execution里有2个*， 
+   第一个*代表接受返回类型，* 代表可以接受任意返回返回值。
+   第二个*(),表示这个类下的所有方法，连接起来解释就是， cn.com.controller.MybitsController下的任意返回值的所有方法 都被代理了。cn.com.controller.MybitsController其中MybitsController是类名称，可以替换为*号通配Controller包下所有的类cn.com.controller.* 。也可以指定类的前缀或者后缀作为通配例如：*Service,通配所有以service结尾的类。
+
+2.2）
+    @Around 环绕增强，相当于MethodInterceptor
+    @Around可以在一个方法里面完成 @Before和@After的功能。
+    实际操作可以发现，在打印完第一行之后，转而又去执行@Before的代码。因为这里触发了ProceedingJoinPoint. proceed()动作。
+    @AfterReturning 后置增强，相当于AfterReturnningAdvice,方法正常退出时执行
+    @Before 表示一个前置增强方法，相当于BeForeAdvice的功能。代理方法前执行
+    @AfterThrowing 异常抛出增强，相当于ThrowsAdvice
+    @After final增强，不管是抛出异常或是正常退出都会正常执行。
+    
+    在@Around ，@Before，@After一起使用的时候发现执行顺序如下：
+
+        Around（proceed之前）
+        Before
+        切入代码
+        Around（proceed之后）
+        After
+   
+  @Around("manage()")
+    public Object manage2(ProceedingJoinPoint joinPoint){
+        String uuid = UUID.randomUUID().toString().replace("-","");
+        MDC.put("uuid",uuid);
+        long start=System.currentTimeMillis();
+        try {
+            Object proceed = joinPoint.proceed();
+            log.info("总体耗时 {}",System.currentTimeMillis()-start);
+            MDC.clear();
+            return proceed;
+        } catch (Throwable throwable) {
+            log.error("执行异常-{}",throwable);
+            MDC.clear();
+            //目前来看 这个 方法判断 返回 没啥区别
+            String method=joinPoint.getSignature().getName();
+          //  log.error("切点所执行的方法为{}",method);
+            if(method.equals("ctTransferOrder")){
+                return CTRESPONSE_INNER_ERROR;
+            }
+            return QUPAIRESPONSE_INNER_ERROR;
+        }
+    }
+
+
+
+代码示例
+
+com.sz.blog.aopAop类
+package com.sz.blog.aop;
+import com.sz.blog.common.Message;
+import org.aspectj.lang.JoinPoint;
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
+
+
+@Aspect
+@Component
+public class MessageAop {
+
+     @Pointcut("execution(*  com.sz.blog.service.UserService.register())")
+    public void sendPoint(){}    
+    
+    @Before("sendPoint()")
+    public void registerBefore(JoinPoint joinPoint){
+          System.out.println("register before");
+    }
+
+
+    //execution 直接指定代理类方法，直接使用被定义为切入点的方法
+    // @After("execution(*  com.sz.blog.service.UserService.register())")
+    @After("sendPoint()")
+  public void registerAfter(){
+      Message.send();
+     System.out.println("register after");
+  }
+}
+
+com.sz.blog.common 通用类
+package com.sz.blog.common;
+
+public class Message {
+
+    public static void send(){
+        System.out.println("send Message");
+    }
+}
+
+package com.sz.blog.service;
+
+import org.springframework.stereotype.Service;
+@Service
+public class UserService {
+  
+    public void register(){
+        System.out.println("user register");
+    }
+}
+
+JoinPoint
+
+    如果需要使用被代理类的方法的信息，就加入JoinPoint；
+    JoinPoint参数的值是由框架富裕，必须是第一个位置的参数。
+    方法中的参数JoinPoint为连接点对象，它可以获取当前切入的方法的参数、代理类等信息，因此可以记录一些信息，验证一些信息等；
+    
+
+作者：蜜獾
+链接：https://www.jianshu.com/p/6aaa46bb35ac
+来源：简书
+著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
