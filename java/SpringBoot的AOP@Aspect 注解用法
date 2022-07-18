@@ -1,3 +1,5 @@
+一、说明
+
 1）定义
   AOP为Aspect Oriented Programming 的缩写，意为“面向切面编程”，通过预编译方式和运行预期动态代理实现程序功能的统一维护的一种技术。AOP是OOP的延续，是软件开发中的一个热点，也是Spring框架中的一个重要内容，是函数式编程的一种衍生泛型。 利用AOP可以对业务逻辑的各个部分进行隔离，从而使得业务逻辑各个部分之间的耦合度降低，提高程序的可用性，同时提高了开发的效率。
 
@@ -10,7 +12,7 @@
  
 实例
 @Aspect
-@Slf4j
+@Component
 public class AspectConfig {
 
     @Pointcut("execution(* cn.com.controller.MybitsController.*())")
@@ -124,7 +126,44 @@ JoinPoint
     方法中的参数JoinPoint为连接点对象，它可以获取当前切入的方法的参数、代理类等信息，因此可以记录一些信息，验证一些信息等；
     
 
-作者：蜜獾
-链接：https://www.jianshu.com/p/6aaa46bb35ac
-来源：简书
-著作权归作者所有。商业转载请联系作者获得授权，非商业转载请注明出处。
+作者：蜜獾链接：https://www.jianshu.com/p/6aaa46bb35ac来源：简书
+
+二）使用
+
+1：导入依赖
+
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-aop</artifactId>
+        </dependency>
+  或者
+   <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-netflix-hystrix</artifactId>
+            <version>1.4.5.RELEASE</version>
+        </dependency>
+
+2：可以直接书写Aspect类
+@Aspect
+@Slf4j
+@Component ///---此处@Component是必要的
+public class AspectConfig {
+
+    @Pointcut("execution(* cn.com.controller.MybitsController.*())")
+    public void manage() {
+
+    }
+    
+每个Pointcut的定义包括2部分，一是表达式，二是方法签名。
+方法签名必须是 public及void型。可以将Pointcut中的方法看作是一个用来引用的助记符，因为表达式不直观，因此我们可以通过方法签名的方式为此表达式命名。因此Pointcut中的方法只需要方法签名，而不需要在方法体内编写实际代码。
+
+常用的注解：
+@Aspect、@Component、@Pointcut、@Before、@AfterReturning
+常用类：
+JoinPoint：获取被代理类、所访问方法、请求参数信息
+RequestAttributes：获取HttpServletRequest对象信息
+
+通常用aop实现权限校验、日志记录等功能，其实现原理是动态代理
+
+
+参考 https://zhuanlan.zhihu.com/p/351468451
