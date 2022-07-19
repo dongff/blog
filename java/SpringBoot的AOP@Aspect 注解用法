@@ -11,10 +11,27 @@
          @Pointcut 定义切入点，放到方法上，表明是要监控哪个地方。
  
 实例
+//该注解表示这是个切面
 @Aspect
+//将该对象交给Spring 的Ico容器管理
 @Component
 public class AspectConfig {
 
+/**
+     * 定义一个切入点表达式,用来确定哪些类需要代理
+     * execution(* aopdemo.*.*(..))代表aopdemo包下所有类的所有方法都会被代理
+     * /**
+     * 连接点 将CarService接口的所有实现类中的方法作为接入点，绑定到carRun（）上。
+     * execution 中字符发解释
+     * 1.第一个 * 任意返回值
+     * 2.中间的是包名
+     * 3.第二个*表示server包下的所有对象
+     * 4.括号表示接收参数
+     * 5.括号中的..表示任意参数
+     * <p>
+     * execution 绑定这一个
+     * 还有 ：execution  within  this  target  args  @target  @args   @within  @annotation
+     */
     @Pointcut("execution(* cn.com.controller.MybitsController.*())")
     public void manage() {
 
