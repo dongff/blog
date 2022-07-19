@@ -85,14 +85,32 @@ public class MessageAop {
     
     @Before("sendPoint()")
     public void registerBefore(JoinPoint joinPoint){
-          System.out.println("register before");
+        System.out.println("register before");
+        System.out.println(" " );
+        System.out.println("Before----------------------------" );
+        System.out.println("Before目标方法名为:" + joinPoint.getSignature().getName());
+        System.out.println("Before目标方法所属类的简单类名:" + joinPoint.getSignature().getDeclaringType().getSimpleName());
+        System.out.println("Before目标方法所属类的类名:" + joinPoint.getSignature().getDeclaringTypeName());
+        System.out.println("Before目标方法声明类型:" + Modifier.toString(joinPoint.getSignature().getModifiers()));
+        //获取传入目标方法的参数
+       System.out.println(Arrays.toString(joinPoint.getArgs()));
+
+
+        Object[] args = joinPoint.getArgs();
+        for (int i = 0; i < args.length; i++) {
+            System.out.println("Before第" + (i + 1) + "个参数为:" + args[i]);
+        }
+        System.out.println("Before被代理的对象:" + joinPoint.getTarget());
+        System.out.println("Before代理对象自己:" + joinPoint.getThis());
+        System.out.println("Before----------------------------" );
+        System.out.println(" " );
     }
 
 
     //execution 直接指定代理类方法，直接使用被定义为切入点的方法
     // @After("execution(*  com.sz.blog.service.UserService.register())")
     @After("sendPoint()")
-  public void registerAfter(){
+  public void registerAfter(JoinPoint joinPoint){
       Message.send();
      System.out.println("register after");
   }
