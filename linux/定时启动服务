@@ -33,4 +33,8 @@ crontab [-u user] [-l | -e | -r]（只有root才能-u）
 每天 02:00 执行任务
 0 2 * * *  sudo  /bin/sh backup.sh
 
+3)清空日志 启动执行后有异常会提示有mail 清空+查看命令
+sudo cat /dev/null > /var/spool/mail/djgroup
+
+
 参考 https://blog.csdn.net/lxblxblx/article/details/103041109
