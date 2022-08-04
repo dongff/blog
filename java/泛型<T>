@@ -1,1 +1,107 @@
+Java泛型
+
+Java在jdk1.5以后提出了泛型机制，在Object显示转换存在不安全行为的情况下，通过泛型就能有效避免转型时候出现的问题，泛型简单的理解就是在类、接口、方法中定义未知类型变量，只有初始化的时候才知道真正的类型。在定义的类或接口函数中可以直接使用这个未知类型进行操作
+
+从整体来讲，泛型的主要作用还是为了解决类型转换的安全性问题，避免了Object来回转换的问题，使得编译器就能识别类型转换的错误，同时通过限定类型使得函数方法等使用的更加灵活方便。不过泛型更多的应用于框架的编写方面，在java中其实也是随处可见。尤其是集合类：
+
+1）泛型类 ：语法如下：
+类名<T>  其中T代表一个类型名称
+类名<T1,T2> 可能有多个类型
+其中T，T1，T2都叫做通配符。常用的通配符有T,E,K,V分别表示类型、元素、键、值，当然这并不是硬性规定，而是大家形成的一种通识。
+
+你在创建node类就可以使用如下的写法了：
+public class node <T>{
+    private T value;
+    public node(T value) {
+        this.value = value;
+    }
+    public T getValue() {
+        return value;
+    }
+    public void setValue(T value) {
+        this.value = value;
+    }
+}
+其中T就可以在类中自由使用，这个类我们暂时不知道是什么，但是初始化的时候编译器就知道它是什么类型：
+
+
+2）泛型接口
+
+既然类可以使用泛型，接口当然也可以，不过接口使用泛型和普通类的略有区别，子类在继承泛型接口的时候需要接口处声明泛型类型，否则编译器报错。例如下面的pig类。
+而如果你依然想在子类中使用泛型，那就需要在子类中声明一个泛型，而接口中的泛型使用子类的泛型类型。例如下面的dog类。
+
+interface aninal <T>
+{
+    T getValue(T t);
+}
+class cat implements aninal {//用默认Object类型
+    @Override
+    public Object getValue(Object o) {
+        return o;
+    }
+}
+class pig implements aninal<String>{//子类不设置泛型，父类接口的泛型需要明确类型
+    @Override
+    public String getValue(String s) {
+        return s+"哼哼";
+    }
+}
+class dog <T>implements aninal<T> {//子类和接口均使用泛型。
+    @Override
+    public T getValue(T t) {
+        return t;
+    }
+}
+也就是说使用泛型接口如果进行继承依然想使用泛型就需要在继承的类中事先定义好接口部分的泛型类供接口使用。
+class 类 <A,B,C>implements aninal<C> 
+
+3）泛型方法
+
+泛型函数的基本使用也很容易，和泛型类和泛型接口使用很相似，不过就是菱形需要放到函数类型前面：
+public   <T1,T2> void fuc(T1 t1,T2 t2)
+{
+     System.out.println(t1);
+     System.out.println(t2);
+ }
+
+
+4）边界限定
+
+泛型既然这么好用，可以在使用时候直接传入具体类型，但是我们在开发很多时候某个类或者某个方法的能够传入类型是有限制的。那么在java中有上边界限定和下边界限定用来限制泛型的可用类型。
+限定通配符包括两种：
+
+    类型的上界，格式为：<？ extends T>，即类型必须为T类型或者T子类
+    类型的下界，格式为：<？ super T>，即类型必须为T类型或者T的父类
+
+举个例子在Java中编写这些类和方法：
+class  animal {
+    //dosomething
+}
+class dog extends  animal {
+    //dosomething
+}
+class pig extends  animal {
+    //dosomething
+}
+public class test {
+    static void printlist1(List<? extends animal>list)//只能aninal和animal的子类
+    {
+        for(animal animal:list)
+        {
+            System.out.println(animal);
+        }
+    }
+    static void dolist2(List<? super pig>list)
+    {
+        //dosomething
+    }
+}
+
+
+————————————————
+版权声明：本文为CSDN博主「Big sai」的原创文章，遵循CC 4.0 BY-SA版权协议，转载请附上原文出处链接及本声明。
+原文链接：https://blog.csdn.net/qq_40693171/article/details/116984198
+
+
+
 
