@@ -1,0 +1,14 @@
+按天统计（一） date(ts)
+SELECT  date(ts) as 日期 , count(1) as 数量 FROM order_info  
+WHERE sys_source  ='2003' and ts<'2022-08-03' and ts>'2022-07-03'  g
+roup by date(ts)
+
+按天统计（二）
+SELECT  date_format(created_at, '%Y-%m-%d') dat,count(*) count FROM `fook_coupon_syn` 
+WHERE operation = 'OrderCode' 
+group by date_format(created_at, '%Y-%m-%d');
+
+按月统计（一）
+select date_format(create_time, '%Y-%m') mont, count(*) coun
+from t_content
+group by date_format(create_time, '%Y-%m');
