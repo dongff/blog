@@ -32,6 +32,7 @@ crontab [-u user] [-l | -e | -r]（只有root才能-u）
 2）crontab -e 编辑定时命令 
 每天 02:00 执行任务
 0 2 * * *  sudo  /bin/sh backup.sh
+编辑完成后 点击esc退出 :wq!保存后退出
 
 3)清空日志 启动执行后有异常会提示有mail 清空+查看命令
 sudo cat /dev/null > /var/spool/mail/djgroup
