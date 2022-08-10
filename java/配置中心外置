@@ -1,0 +1,18 @@
+1）配置文件外置（测试的在 git  configtest 仓库，正式在 edi 仓库）
+ 1；   <dependency>
+            <groupId>org.springframework.cloud</groupId>
+            <artifactId>spring-cloud-starter-config</artifactId>
+        </dependency>
+
+2：  spring:
+cloud:
+    config:
+      enabled: true（这个值默认是true，可以不设置）
+      fail-fast: true
+      discovery:
+        enabled: true  （这个值默认是false，必须设置为true）
+        service-id: dj-atliwen-edi-config
+3；在仓库上传自己的文件，文件名：  服务名.yml
+
+ps：spring.cloud.config.discovery.enabled,(这个将会使用配置服务器【配置中心config】的url),而不会使用 你自己指定的 uri: 10.10.6.243:30224
+http://git.zjs.com.cn
