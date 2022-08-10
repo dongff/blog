@@ -1,0 +1,39 @@
+@RequestBody与@Validated一起使用时多层校验失效，改为@RequestBody @Valid
+1.看代码
+
+     @ApiOperation("描述信息")
+        @PostMapping("/addRole")
+        public ResponseData<Boolean> addRole(@RequestBody @Valid RoleListParam roleParam) {
+            return ResponseData.success(dramaService.addRole(roleParam));
+        }
+
+        2.嵌套数据中
+     
+        @ApiModelProperty("id")
+        @NotNull(message = "id不能为空")
+        private Long dramaId;
+     
+     
+        @ApiModelProperty("参数")
+        @Valid
+        private List<RoleParam> roleParamList;
+     
+        @ApiModelProperty("参数集合")
+        @Valid
+        private List<DramaDmParam> dmParams;
+
+        3.这样写校验生效了需要我们在异常以拦截器中写自定义拦截类
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+        public ResponseData<Object> handleMethodArgumentNotValidException(MethodArgumentNotValidException e) {
+            StringBuilder msg = new StringBuilder();
+            List<ObjectError> allErrors = e.getBindingResult().getAllErrors();
+            for (ObjectError allError : allErrors) {
+                msg.append(allError.getDefaultMessage());
+            }
+            return ResponseData.fail(ResponseCode.PARAM_INVALIDATE.getCode(), msg.toString());
+        }
+
+注意：
+    BindException是@Validation单独使用校验失败时产生的异常
+    MethodArgumentNotValidException是@RequestBody和@Validated配合时产生的异常，比如在传参时如果前端的json数据里部分缺失@RequestBody修饰的实体类的属性就会产生这个异常。
+
