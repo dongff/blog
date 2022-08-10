@@ -1,0 +1,15 @@
+DROP PROCEDURE if EXISTS clear;
+CREATE PROCEDURE clear(in myid int)
+BEGIN
+DECLARE i INT;
+SET i=1;
+
+WHILE i<10000 DO 
+delete from data_direct_push where id<myid limit 100;
+SET i=i+1;
+END WHILE;
+SELECT * from data_direct_push limit 1;
+END
+
+
+CALL clear(1000000);
