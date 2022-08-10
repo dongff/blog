@@ -1,0 +1,15 @@
+docker主要命令:
+docker ps 查看docker服务
+docker stop 2728dfb67fc 停止docker服务
+docker ps –a
+docker start 
+docker images 查看下载的
+docker image  -help 查看有哪些命令
+
+推镜像命令
+docker push hb.zjs.com.cn/edi/interface-microdervice-discovery-8761:0.1.1
+docker push hb.zjs.com.cn/edi/interface-microdervice-discovery-8762:v0.0.3
+启动命令 :
+Docker run –d -p 8761:8761 --name duijie-zyg-discovery-8761  hb.zjs.com.cn/edi/interface-microservice-discovery-8761:0.1.1
+Docker run -d -p 8762:8762  --name duijie-zyg-discovery-8762  hb.zjs.com.cn/edi/interface-microservice-discovery-8762:v0.0.3
+
