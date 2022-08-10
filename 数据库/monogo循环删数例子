@@ -1,0 +1,75 @@
+1）demo1
+
+db=db.getSiblingDB("waybill");
+var del_count=0;
+var hs;
+var i=0;
+var btime=new Date().getTime();
+var btime1;
+var etime;
+var runflag=true;
+while (runflag) {
+i++;
+btime1=new Date().getTime();
+var mmp=db.In_WaybillSuccess.find({operTime:{$lt:ISODate("2019-01-01T00:00:00.000Z")}},{_id:1}).limit(50).map(function(el) { return el._id });
+  if (mmp.length>0){
+    db.In_WaybillSuccess.deleteMany({_id:{$in:mmp}},{w:0,j:false});
+    etime=new Date().getTime();
+    hs=etime-btime1;
+    del_count=del_count+mmp.length;
+    print('循环第'+i+'次，已删除了'+del_count+'条数据！此次循环耗时：'+hs+'ms');
+  }else{
+    print('未找到符合条件的记录');
+    runflag=false;
+    break;
+       }
+}
+
+print('-------------------------------------------------');
+etime=new Date().getTime();
+hs=etime-btime;
+print('合计：总循环'+i+'次，共计删除了'+del_count+'条数据！此次循环耗时：'+hs+'ms');
+print('-------------------------------------------------');
+
+
+2）demo2
+
+db.Edi_Spp_Standard_Message.find({'ot':{"$gt":ISODate("2021-08-07T14:00:02.000+08:00"),"$lte":ISODate("2021-08-07T19:00:02.000+08:00")},'cf':'taobao','re':0},{_id:1}
+).forEach(function(item) {
+db.temp_test.insert(item)})
+
+db.temp_test.find({flag: {$exists: false}}).count();
+
+var runstate =true;
+var i=0;
+while(runstate){
+var idString="";
+//查询临时表_id
+var mmp=db.temp_test.find({flag: {$exists: false}}).limit(200).map(function(el) { return el._id });
+//print(mmp);
+//更新数据表
+db.Edi_Spp_Standard_Message.update({_id:{$in:mmp}},{$set:{"re":-1,"pc":1}},{ multi: true, upsert: false});
+db.temp_test.update({_id:{$in:mmp}},,{$set:{"flag":-1}},{ multi: true, upsert: false});
+
+//db.Edi_Spp_Standard_Message.find({_id: {$in: mmp }}).forEach(function(item) {
+ //print(item);
+ //db.Edi_Spp_Standard_Message.update({_id:{$in:mmp}},{$set:{"re":-1,"pc":1}},{ multi: true, upsert: false});  
+//});
+//更新临时表
+//db.temp_test.find({flag: {$exists: true}});
+i++;
+ 
+
+    if(mmp.length =0 ){
+      runstate=false;
+      print("Over!");
+    }else{
+    if(mmp.length %200 ==0){
+        print(i);
+    }
+}
+
+
+db.Edi_Spp_Standard_Message.find({'ot':{"$gt":ISODate("2021-08-07T04:00:02.000+08:00"),"$lte":ISODate("2021-08-09T19:00:02.000+08:00")},'cf':'taobao','re':0},{_id:1}
+).forEach(function(item) {
+db.temp_test.insert(item)})
