@@ -1,4 +1,5 @@
-1)找出 gropuid， artifactid
+1)点击包名，找出左侧的外部包名external libraries里的带分号的名字 如 maven:org.springframework:spring-context:4.3.24其中 gropuid：artifactid 为org.springframework:spring-context
+
 2)执行 mvn dependency:tree -Dverbose -Dincludes=junit:junit
 
 原文参考 https://blog.csdn.net/meilishiguang/article/details/116937534?spm=1001.2101.3001.6650.1&utm_medium=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-116937534-blog-97374592.pc_relevant_multi_platform_whitelistv1&depth_1-utm_source=distribute.pc_relevant.none-task-blog-2%7Edefault%7ECTRLIST%7Edefault-1-116937534-blog-97374592.pc_relevant_multi_platform_whitelistv1&utm_relevant_index=1
