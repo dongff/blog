@@ -1,0 +1,11 @@
+配置环境变量
+1）	 JAVA_HOME  jdk的位置
+
+2）	再新建一个变量名为“CLASSPATH”，变量值为“.;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar;”的系统变量，注意前面的点号和分号都是有的
+CLASSPATH  .;%JAVA_HOME%\lib\dt.jar;%JAVA_HOME%\lib\tools.jar;
+3）Path   %JAVA_HOME%\bin    %JAVA_HOME%\jre\bin
+
+;%JAVA_HOME%\bin;%JAVA_HOME%\jre\bin
+
+3)验证
+在命令行窗口输入 java version验证
