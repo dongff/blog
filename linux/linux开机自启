@@ -1,0 +1,83 @@
+ systemctl 命名
+sudo systemctl daemon-reload 刷新服务配置文件
+sudo systemctl enable abcd.service 设置开机重启（视情况而定）
+sudo systemctl start  abcd.service 启动服务
+
+
+1）所有linux 系统上 的 jar包 后台启动的程序，这次 都改下，改成开机自启的 服务：：
+systemd/system 目录下
+
+abcd.service:::::::
+
+[Unit]
+Description=abcd service
+After=syslog.target
+
+[Service]
+Type=simple
+ExecStart= /usr/bin/java -jar /home/app/abcd.jar  (自己的命令)
+StandardOutput=null
+
+[Install]
+WantedBy=multi-user.target
+
+
+　首先 sudo systemctl daemon-reload 刷新服务配置文件
+　　然后 sudo systemctl enable abcd.service 设置开机重启（视情况而定）
+　　再　 sudo systemctl start  abcd.service 启动服务
+
+
+systemctl status abcd.service  查看是否启动
+
+2）windows 服务器 启动的jar 包 ，也可以：：
+
+安装logstash 为windows服务 
+
+cd到logstash文件夹下bin目录 
+
+创建一个logstash.bat （例如
+
+下图
+）
+下载nssm 
+https://nssm.cc/release/nssm-2.24.zip 
+
+解压拷贝nssm-2.24\win64目录下nssm.exe到logstash bin目录 
+
+cmd 运行 nssm install logstash 
+
+在弹出的界面设置 Path为run.bat,Details选项卡设置显示名
+，Dependencies选项卡设置依赖服务 elasticsearch-service-x64 
+
+最后点击install service 安装成功 
+
+3）nginx 的 ，也搞成开机自启
+[Unit]
+Description=nginx
+After=network.target
+ 
+[Service]
+Type=forking
+ExecStart=/usr/local/nginx/sbin/nginx
+ExecReload=/usr/local/nginx/sbin/nginx -s reload
+ExecStop=/usr/local/nginx/sbin/nginx -s quit
+PrivateTmp=true
+ 
+[Install]
+WantedBy=multi-user.target
+
+
+4）把各自的 filebeat 也变成 服务
+注意文件名 ，及文件目录。。
+
+[Unit]
+Description=filebeat service
+After=syslog.target
+
+[Service]
+Type=simple
+ExecStart= /home/djgroup/filebeat/filebeat-6.4.2-linux-x86_64/filebeat -e -c /home/djgroup/filebeat/filebeat-6.4.2-linux-x86_64/filebeat.yml
+StandardOutput=null
+
+[Install]
+WantedBy=multi-user.target
