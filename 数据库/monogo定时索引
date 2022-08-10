@@ -1,0 +1,3 @@
+使用crontab写个脚本定时执行， linux里可以使用crontab执行定期任务
+建立索引数据量大的话 background设置为true
+db.Edi_Spp_Original_Current.createIndex({ "rt": 1 }, { expireAfterSeconds: 60*60*24*30 ,background: true}) 
