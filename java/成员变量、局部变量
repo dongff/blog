@@ -1,0 +1,121 @@
+成员变量
+
+作用范围是整个类，相当于C中的全局变量，定义在方法体和语句块之外，一般定义在类的声明之下；成员变量包括实例变量和静态变量(类变量)；都存放在堆（Heap）。
+
+    实例变量。独立于与方法之外的变量，无static修饰，声明在一个类中，但在方法、构造方法和语句块之外，数值型变量默认值为0，布尔型默认值为false，引用类型默认值为null；存在于堆(Heap)内存中。
+    静态变量，也叫类变量，使用static修饰。独立于方法之外的变量，用static修饰，默认值与实例变量相似，一个类中只有一份，属于对象共有，存储在静态存储区。经常被声明为常量，调用一般是类名.静态变量名，也可以用对象名.静态变量名调用**；
+
+局部变量
+
+    类的方法中的变量，访问修饰符不能用于局部变量，声明在方法、构造方法或语句块中，在栈(Stack)上分配，无默认值，必须经初始化；
+
+示例
+
+package com.cunyu.demo
+
+public class Demo {
+
+    private String name;  //成员变量 也叫实例变量
+    private int age;  		//成员变量 也叫实例变量
+    private int ID;  			//成员变量 也叫实例变量
+
+    public static final String school = "卡塞尔学院";  //成员变量 静态变量也叫(类变量)
+    public static String level = "SSS";    //成员变量 静态变量也叫(类变量)
+
+    public int getAge() {
+        return age;
+    }
+
+    public int getId() {
+        return ID;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setAge(int age) {
+        this.age = age;
+    }
+
+    public void setId(int ID) {
+        this.ID = ID;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public void study(){
+            String subject1 = "屠龙";  //局部变量
+            String subject2 = "炼金术"; //局部变量
+            System.out.println("学习科目： " + subject1 + "、" + subject2);
+        }
+
+    public static void main(String[] args) {
+        Demo demo = new Demo();
+        demo.setAge(23);
+        demo.setId(14000001);
+        demo.setName("楚子航");
+        System.out.println("ID: " + demo.getId() + "Age: " + demo.getAge() + "Name: " + demo.getName());
+        System.out.print("主修科目： ");
+        demo.study();
+        System.out.println("学院：" + Demo.school);
+        System.out.println("等级：" + Demo.level);
+    }
+}
+
+区别
+
+常见的面试题：静态变量和实例变量的区别
+
+    成员变量存在于堆(Heap)内存中。
+    静态变量存在于方法区(Method)中。
+    成员变量与对象共存亡，随着对象创建而存在，随着对象被回收而释放。
+    静态变量与类共存亡，随着类的加载而存在，随着类的消失而消失。
+    成员变量所属于对象，所以也称为实例变量。
+    静态变量所属于类，所以也称为类变量。
+    成员变量只能被对象所调用 。
+    静态变量可以被对象调用，也可以被类名调用。
+
+常见的面试题：成员变量与局部变量的区别有哪些
+
+变量：在程序执行的过程中，在某个范围内其值可以发生改变的量。从本质上讲，变量其实是内存
+
+中的一小块区域
+
+成员变量：方法外部，类内部定义的变量
+
+局部变量：类的方法中的变量。
+
+成员变量和局部变量的区别
+
+作用域
+
+成员变量：针对整个类有效。
+
+局部变量：只在某个范围内有效。(一般指的就是方法,语句体内)
+
+存储位置
+
+成员变量：随着对象的创建而存在，随着对象的消失而消失，存储在堆内存中。
+
+局部变量：在方法被调用，或者语句被执行的时候存在，存储在栈内存中。当方法调用完，或者语
+
+句结束后，就自动释放。
+
+生命周期
+
+成员变量：随着对象的创建而存在，随着对象的消失而消失
+
+局部变量：当方法调用完，或者语句结束后，就自动释放。
+
+初始值
+
+成员变量：有默认初始值。
+
+局部变量：没有默认初始值，使用前必须赋值。
+
+作者：BearBrick0
+
+出处：https://www.cnblogs.com/bearbrick0/p/15871402.html
