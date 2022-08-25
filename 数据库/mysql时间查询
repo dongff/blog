@@ -1,0 +1,19 @@
+1、查询当前30分钟的数据
+select   count(1)  from data_direct_push t   WHERE  `status`=0  and   gmt_create < SUBDATE(NOW()  ,interval 30 MINUTE)   ;
+当前时间 NOW() 当前30分钟 SUBDATE(NOW()  ,interval 30 MINUTE) 
+当前天  CURDATE() 
+增加时间函数 ADDDATE(date,INTERVAL expr unit)   INTERVAL expr unit：interval 30 MINUTE  interval 2 hour interval 7 day
+减少时间函数  SUBDATE(NOW()  ,interval 30 MINUTE) 
+
+2、字符串日期转化
+2.1当字符串格式和时间格式相同时，mysql会自动进行转换。例如：
+SELECT * FROM table WHERE ts = '2021-12-14'
+2.2 mysql中，DATE_FORMAT(date, format) 函数根据format字符串格式化date值,format字符串格式
+把字符串转为日期格式:
+SELECT  DATE_FORMAT( '2011-09-20 08:30:45' ,    '%Y-%m-%d %H:%i:%S' );
+2.3把日期转为字符串格式:
+SELECT  DATE_FORMAT(NOW(),    '%Y-%m-%d %H:%i:%S' );
+
+
+
+ 
