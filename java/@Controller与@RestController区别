@@ -1,31 +1,32 @@
 @RestController注解相当于@ResponseBody ＋ @Controller合在一起的作用。简单来说@RestController返回json/xml数据,如果该Controller中需要返回jsp，html界面，那么就需要使用@Controller注解Controller，不能用@RestController。
 
 如果Controller中某个返回一个页面，使用 @Controller
-
 1）单独使用 @Controller 不加 @ResponseBody的话，一般使用在，要返回一个视图的情况，这种情况属于比较传统的Spring MVC 的应用，对应于前后端不分离的情况。
  @Controller 返回一个页面
  
  控制类的方法的返回值return "hello"，Spring 默认会去 resources 目录下 templates 目录下找，所以建议把页面放在 resources/templates目录下hello.html；
-
 如果要对页面在templates目录下的hello文件夹中的话，返回页面的时候，控制类的方法的返回值return "hello/hello"。
 
 2）如果Controller中某个返回JSON 或 XML 形式数据，使用@RestController，或者@Controller +@ResponseBody组合使用
 
 如果你需要在Spring4之前，开发 RESTful Web服务的话，你需要使用@Controller 并结合@ResponseBody注解，也就是说@Controller +@ResponseBody= @RestController（Spring 4 之后新加的注解），返回JSON 或 XML 形式数据。
-
 @RestController只返回对象，对象数据直接以 JSON 或 XML 形式，写入 HTTP 响应(Response)中，这种情况属于 RESTful Web服务，这也是目前日常开发所接触的最常用的情况（前后端分离）。
 @ResponseBody 注解的作用，是将 Controller 的方法返回的对象，通过适当的转换器转换为指定的格式之后，写入到HTTP 响应(Response)对象的 body 中，通常用来返回 JSON 或者 XML 数据，返回 JSON 数据的情况比较多。
 
 SpringBoot 默认集成了 jackson ，对于此需求你不需要添加任何相关依赖，返回需要返回的JSON、XML的结果集。
-
 使用@RestController注解的时候需要注意几个问题：
-
 如果使用@RestController注解Controller，那么该Controller中的方法，就无法返回jsp页面。
-
 就是说如果在方法中return "xx"，那么它只会返回"xx"的内容，因为@RestController中相当于已经有了@RessponseBody的注解效果，所以它无法返回jsp，html界面，配置的InternalResourceViewResolver不工作，只能返回return的内容。
-
 如果该Controller中需要返回jsp，html界面，那么就需要使用@Controller注解Controller，不能用@RestController。
-
 如果我们在Controller方法中，需要返回JSON、XML，或者我们自己定义的类型到页面中，那么就需要使用@ResponseBody注解该方法。
+
+
+2）@RequestMapping中有两个属性，consumes和produces，于是就想弄清楚这两个属性是干什么的。
+一、produces
+指定返回值类型，并且可以设置返回值类型和返回值的字符编码；
+produces="MediaType.APPLICATION_JSON_VALUE;charset=utf-8"    produces="application/json"
+二、consumes
+指定处理请求当中的提交内容类型（Content-Type）：application/json, text/html等;
+
 
 参考 https://baijiahao.baidu.com/s?id=1708667700327378958&wfr=spider&for=pc
