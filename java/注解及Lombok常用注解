@@ -1,0 +1,18 @@
+      JAVA的四种标准元注解
+
+    @Target 修饰对象范围，例如types, packages
+    @Retention 定义保留的时间长短，例如SOURCE，RUNTIME
+    @Document描述javadoc
+    @Inherited阐述某个被标注的类型是被继承的。作用：如果一个类用上了@Inherited修饰的注解，那么其子类也会继承这个注解。但是如果接口用上个@Inherited修饰的注解，其实现类不会继承这个注解；或者父类的方法用了@Inherited修饰的注解，子类也不会继承这个注解。这样操作后，子类可以获取父类的注解，字段等信息。
+    该部分参考资料：https://blog.csdn.net/qq_43390895/article/details/100175330
+
+        
+        1. @NonNull
+        2. 更简洁的数据类
+        3.1 @Getter 和 @Setter
+        3.2 @AllArgsConstructor
+        3.3 @ToString
+        3.4 @EqualsAndHashCode
+        3.5 @Data
+        4. 使用 @Buidler 创建对象
+        5. 日志@Slf4j
