@@ -1,0 +1,11 @@
+String，StringBuffer，StringBuilder
+
+    String底层是final char value[]。因此其不可变。
+    
+    StringBuffer和StringBuilder都是继承自AbstractStringBuilder，其底层使用的是char value[]（无final），所以可变。
+    StringBuffer是线程安全的（使用synchronized保证），StringBuilder不是，所以StringBuilder速度更快。
+    
+    每次对String类型进行改变时，会生成一个新的String对象，然后把指针指向新的String，但是其他两个都是操作自身。
+
+
+原文链接：https://blog.csdn.net/qq_35571432/article/details/121953322
