@@ -1,0 +1,7 @@
+
+
+List与Set的区别
+
+1)List、Set都继承自Collection接口；List的特点：元素有放入顺序，且可重复；Set的特点：元素无放入顺序，且不可重复（注意：元素虽然无放入顺序，但是元素在Set中的位置是由该元素的HashCode决定的，其位置是固定的）。List支持for循环，也就是通过下标来遍历，也可以用迭代器，但是Set只能用迭代器，因为他无序，无法使用下标取值；
+2)List接口有三个实现类：LinkedList,ArrayList,Vector。Set接口有两个实现类：HashSet（底层由HashMap实现），LinkedHashSet
+3)Set：检索元素效率低，删除和插入效率高，插入和删除不会引起元素位置改变。List：和数组类似，List可以动态增长，查找元素效率高，插入删除元素效率低，因为会引起其他元素位置改变。
