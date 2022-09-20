@@ -155,10 +155,9 @@ public class ObjectCreation {
     }
 }
 
-复制代码
 
 程序会输出：
-复制代码
+
 
 Employee Constructor Called...
 Employee [name=Naresh], hashcode : -1968815046
@@ -169,18 +168,6 @@ Employee [name=Yogesh], hashcode : -1641292792
 Employee [name=Atul], hashcode : 2051657
 Employee [name=Akash], hashcode : 63313419
 
-复制代码
+
 
  
-熬夜不易,点击请老王喝杯烈酒！！！！！！！
-分类: 服务端
-标签: java
-好文要顶 关注我 收藏该文
-_1900
-粉丝 - 654 关注 - 0
-+加关注
-21
-0
-« 上一篇： Netty 系列之 Netty 高性能之道
-» 下一篇： Redis五种数据结构简介
-posted @ 2016-07-19 18:26  _1900  阅读(171853)  评论(6)  编辑  收藏  举报
