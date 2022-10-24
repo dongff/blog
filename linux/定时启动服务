@@ -8,6 +8,10 @@ at 10:34 2021-12-05
 at> curl https://www.qq.com
 ctrl+d保存内容
 
+at 23:59 2022-10-25
+/bin/sh zgyz/dingshi/kill-zgyz.sh
+
+
 查看成功待用记录 atq 
 删除命令 atrm [num]
 
