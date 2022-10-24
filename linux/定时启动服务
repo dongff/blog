@@ -8,10 +8,8 @@ at 10:34 2021-12-05
 at> curl https://www.qq.com
 ctrl+d保存内容
 
-查看成功待用记录
-atq 
-删除命令
-atrm [num]
+查看成功待用记录 atq 
+删除命令 atrm [num]
 
 
 2）crontab的使用
