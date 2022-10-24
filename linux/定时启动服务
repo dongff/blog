@@ -4,9 +4,15 @@ linux中有两种定时任务：
 2、crontab：周期性定时任务；
 
 1）at
-atd服务启动，其负责调度服务
-/etc/init.d/atd restart （重启atd服务）
-chkconfig atd on （检测atd状态）
+at 10:34 2021-12-05
+at> curl https://www.qq.com
+ctrl+d保存内容
+
+查看成功待用记录
+atq 
+删除命令
+atrm [num]
+
 
 2）crontab的使用
 
