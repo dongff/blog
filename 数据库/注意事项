@@ -1,0 +1,37 @@
+1、spring-data-jpa连接splserver时，如果地址有端口，端口是用冒号，而不是用逗号。其他的像c#和 sqlserver本身的客户端等，都用逗号。
+
+2、spring-data-jpa多数据源的使用（参考淘宝开单项目），需要配置实体类和仓库的地址。
+
+3、spring-data-jpa 对存错过程支持不太完善，不是所有能在数据库用的都能在jpa中使用。
+ 例如 将字符串设置成 nvarchar 类型，其他不支持。
+ 例如 在存储过程的开头 加上 SET NOCOUNT ON;语句，否则，稍微复杂点的存储过程就不输出。
+ 如果存储过程不复杂的话，建议用事务代替。
+
+4、@Id注解 ：表示这个属性对应数据库中的主键
+   @GeneratedValue(strategy = GenerationType.AUTO ：注解表示这个主键策略是自增的，自增的
+   实体类必须加上这个注解。
+
+5、数据库名及表名不一致问题
+   实体类名与数据库名不一致，必须加上@Table(name = "BSQ_Order")
+   实体类字段名与数据库列名不一致@Column(name = "ID")
+
+6、大小写 下划线问题
+   加上它，就不会自动将大写转为下划线。
+spring.jpa.hibernate.naming.physical-strategy=org.hibernate.boot.model.naming.PhysicalNamingStrategyStandardImpl
+   所以定义数据库表名与列名，最好全部小写。
+
+7、jpa显示sql数据库设置显示sql语句设置
+   spring.jpa.show-sql:true
+
+8、重视团队力量
+  当你遇到解决不了的问题，可以试着找他人求助，你不清楚不代表别人找不出问题。
+  
+9、jemter传输参数中使用转义字符问题解决
+  加号“+”转换为“%2B”或“2B%”。网上说是2B%，但实际我用 %2B 成功了。ok，经杨工经验，确实为“%2B”  
+
+10、jemter传输body
+ 加HTTP Header Manager 页签，添加 Content-Type 为application/json
+
+11、jemter压力测试，使用csv文件
+  1、 "vcustcodes":"${vcustcode-name}"。使用 "${ }"来定义
+  2、添加 CSV Data Set Config页签。加入 Variable Names(comma-delimited) 为中括号里的名字vcustcode-name。utf-8编码 
